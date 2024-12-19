@@ -24,9 +24,9 @@ public class MainLinkedList {
         System.out.println(doublyLinkedList + "\n" + "Длина: " + doublyLinkedList.getLength());
         System.out.println("\n== Индексатор ==");
         System.out.println("Получение индекса: " + minionJohn + " Индекс: " + doublyLinkedList.getIndex(minionJohn));
-        System.out.println("Поиск по индексу: " + doublyLinkedList.findByIndex(1));
+        System.out.println("Поиск по индексу 1: " + doublyLinkedList.findByIndex(1));
         doublyLinkedList.deleteByIndex(3);
-        System.out.println("\n== Обновленный список после удаления по индексу и итератор ==");
+        System.out.println("\n== Обновленный список после удаления по индексу 3 и итератор ==");
         for (Minion i : doublyLinkedList) {
             System.out.println(i);
         }
