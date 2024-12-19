@@ -6,13 +6,13 @@ public class MainBinaryTree {
     public static void main(String[] args) {
         AbstractBinaryTree<Integer> tree = new BinaryTree<>(1);
         AbstractBinaryTree<Integer> tree1 = new BinaryTree<>(3);
-        AbstractBinaryTree<Integer> tree2 = new BinaryTree<Integer>(2, tree, tree1);
+        AbstractBinaryTree<Integer> tree2 = new BinaryTree<>(2, tree, tree1);
 
         AbstractBinaryTree<Integer> tree3 = new BinaryTree<>(5);
         AbstractBinaryTree<Integer> tree4 = new BinaryTree<>(7);
-        AbstractBinaryTree<Integer> tree5 = new BinaryTree<Integer>(6, tree3, tree4);
+        AbstractBinaryTree<Integer> tree5 = new BinaryTree<>(6, tree3, tree4);
 
-        AbstractBinaryTree<Integer> mainTree = new BinaryTree<Integer>(4, tree2, tree5);
+        AbstractBinaryTree<Integer> mainTree = new BinaryTree<>(4, tree2, tree5);
         System.out.println("Вывод дерева в виде строки, где каждый внутренний уровень идентифицируется двумя пробелами в качестве отступа");
         System.out.println(mainTree.asIndentedPreOrder(0));
 
@@ -28,13 +28,16 @@ public class MainBinaryTree {
             System.out.print(node.getKey() + " ");
         }
 
-        System.out.println("\nОбход inOrder (в отсортированном порядке): ");
-        mainTree.forEachInOrder(System.out::println);
+        System.out.println("\nОбход inOrder (левое поддерево, вершина, правое поддерево): ");
+        mainTree.forEachInOrder(e -> System.out.print(e + " "));
 
         System.out.println("\nПоиск в ширину: ");
         mainTree.breadthFirstSearch();
 
         System.out.println("\nПоиск в глубину: ");
         mainTree.depthFirstSearch();
+
+        System.out.println("\nКрасивый вывод");
+        System.out.println(mainTree);
     }
 }

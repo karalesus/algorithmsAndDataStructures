@@ -15,4 +15,5 @@ public interface AbstractBinaryTree<E> {
     void forEachInOrder(Consumer<E> consumer);
     void depthFirstSearch();
     void breadthFirstSearch();
+    String print();
 }

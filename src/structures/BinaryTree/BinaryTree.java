@@ -1,5 +1,7 @@
 package structures.BinaryTree;
 
+import BinarySearchTree.AbstractBinarySearchTree;
+
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -70,7 +72,7 @@ public class BinaryTree<E> implements AbstractBinaryTree<E> {
     @Override
     public List<AbstractBinaryTree<E>> inOrder() {
         List<AbstractBinaryTree<E>> tree = new ArrayList<>();
-        if (this.leftChild != null){
+        if (this.leftChild != null) {
             tree.addAll(leftChild.inOrder());
         }
         tree.add(this);
@@ -110,7 +112,7 @@ public class BinaryTree<E> implements AbstractBinaryTree<E> {
         tree.push(this);
         while (!tree.isEmpty()) {
             AbstractBinaryTree<E> currentNode = tree.pop();
-            System.out.println(currentNode.getKey());
+            System.out.print(currentNode.getKey() + " ");
             if (currentNode.getRight() != null) {
                 tree.push(currentNode.getRight());
             }
@@ -124,9 +126,9 @@ public class BinaryTree<E> implements AbstractBinaryTree<E> {
     public void breadthFirstSearch() {
         Queue<AbstractBinaryTree<E>> tree = new LinkedList<>();
         tree.add(this);
-        while (!tree.isEmpty()){
+        while (!tree.isEmpty()) {
             AbstractBinaryTree<E> currentNode = tree.poll();
-            System.out.println(currentNode.getKey());
+            System.out.print(currentNode.getKey() + " ");
             if (currentNode.getLeft() != null) {
                 tree.add(currentNode.getLeft());
             }
@@ -134,5 +136,85 @@ public class BinaryTree<E> implements AbstractBinaryTree<E> {
                 tree.add(currentNode.getRight());
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        System.out.println(print());
+        return "";
+    }
+
+    @Override
+    public String print() {
+        if (this == null) return "";
+
+        StringBuilder result = new StringBuilder();
+        List<List<String>> lines = new ArrayList<>();
+        List<AbstractBinaryTree<E>> currentLevel = new ArrayList<>();
+        List<AbstractBinaryTree<E>> nextLevel = new ArrayList<>();
+        int widestNode = 0;
+        int nodesInLevel = 1;
+
+        currentLevel.add(this);
+
+        while (nodesInLevel > 0) {
+            List<String> line = new ArrayList<>();
+            nodesInLevel = 0;
+
+            for (AbstractBinaryTree<E> node : currentLevel) {
+                if (node == null) {
+                    line.add(null);
+                    nextLevel.add(null);
+                    nextLevel.add(null);
+                } else {
+                    String nodeValue = String.valueOf(node.getKey());
+                    line.add(nodeValue);
+                    widestNode = Math.max(widestNode, nodeValue.length());
+
+                    nextLevel.add(node.getLeft());
+                    nextLevel.add(node.getRight());
+                    if (node.getLeft() != null) nodesInLevel++;
+                    if (node.getRight() != null) nodesInLevel++;
+                }
+            }
+
+            lines.add(line);
+            currentLevel = new ArrayList<>(nextLevel);
+            nextLevel.clear();
+        }
+
+        widestNode += widestNode % 2;
+        int perPiece = lines.get(lines.size() - 1).size() * (widestNode + String.valueOf(key).length());
+
+        for (int i = 0; i < lines.size(); i++) {
+            List<String> line = lines.get(i);
+            int halfPieceWidth = (int) Math.floor(perPiece / 2f) - 1;
+
+            if (i > 0) {
+                for (int j = 0; j < line.size(); j++) {
+                    char connector = ' ';
+                    result.append(connector);
+
+                    if (line.get(j) == null) {
+                        result.append(" ".repeat(perPiece - 1));
+                    } else {
+                        result.append((" ").repeat(halfPieceWidth)).append(j % 2 == 0 ? "/" : "\\").append((" ").repeat(halfPieceWidth));
+                    }
+                }
+                result.append("\n");
+            }
+
+            for (String nodeValue : line) {
+                if (nodeValue == null) nodeValue = "";
+                int leftPad = (int) Math.ceil((perPiece - nodeValue.length()) / 2.0);
+                int rightPad = (int) Math.floor((perPiece - nodeValue.length()) / 2.0);
+
+                result.append(" ".repeat(leftPad)).append(nodeValue).append(" ".repeat(rightPad));
+            }
+            result.append("\n");
+
+            perPiece /= 2;
+        }
+        return result.toString();
     }
 }
