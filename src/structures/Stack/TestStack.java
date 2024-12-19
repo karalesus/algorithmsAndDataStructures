@@ -2,11 +2,11 @@ package structures.Stack;
 
 public class TestStack {
     public static void main(String[] args) {
-        String expression = "{[](())}";
+        String expression = "{[](())}}";
         if (isExpressionTrue(expression)) {
-            System.out.println("все ок!");
+            System.out.println("Выражение: " + expression + "\nвсе ок!");
         } else {
-            System.out.println("скобки расставлены неправильно");
+            System.out.println("Выражение: " + expression + "\nскобки расставлены неправильно");
         }
     }
 
